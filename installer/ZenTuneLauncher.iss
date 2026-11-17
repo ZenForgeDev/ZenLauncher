@@ -5,7 +5,7 @@
 [Setup]
 AppId={{B7C1D6A2-5E0F-4B7A-9C55-2F6D4A1E7B11}
 AppName=ZenLauncher
-AppVersion=0.2.0.0
+AppVersion=0.2.0
 AppPublisher=ZenForge
 DefaultDirName={autopf}\ZenLauncher
 DisableDirPage=yes

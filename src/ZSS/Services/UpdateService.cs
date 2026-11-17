@@ -34,7 +34,9 @@ public static class UpdateService
     private static Version? ParseVersion(string tag)
     {
         var m = Regex.Match(tag ?? "", @"(\d+)(\.\d+){1,3}");
-        return m.Success && Version.TryParse(m.Value, out var v) ? v : null;
+        if (!m.Success || !Version.TryParse(m.Value, out var v)) return null;
+        // «0.2» og «0.2.0» er samme versjon (System.Version regner manglende ledd som mindre)
+        return new Version(v.Major, v.Minor, Math.Max(v.Build, 0), Math.Max(v.Revision, 0));
     }
 
     public static async Task<Result> CheckAsync(string repo, string current)
