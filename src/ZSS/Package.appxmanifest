@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+	xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+	xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+	xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+	xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4"
+	xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+	xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+	xmlns:desktop6="http://schemas.microsoft.com/appx/manifest/desktop/windows10/6"
+	IgnorableNamespaces="uap uap3 uap4 rescap desktop6">
+
+	<Identity
+		Name="ZenForge.ZenTuneLauncher"
+		Publisher="CN=ZenForge"
+		Version="0.2.0.0" />
+
+	<Properties>
+		<DisplayName>ZenLauncher</DisplayName>
+		<PublisherDisplayName>ZenForge</PublisherDisplayName>
+		<Logo>Assets\StoreLogo.png</Logo>
+		<!-- Ingen virtualisering av HKCU/AppData: Steam, nettlesere og andre apper vi starter
+		     skal se og skrive de ekte filene/nøklene (profiler, innlogging osv.). Krever unvirtualizedResources. -->
+		<desktop6:RegistryWriteVirtualization>disabled</desktop6:RegistryWriteVirtualization>
+		<desktop6:FileSystemWriteVirtualization>disabled</desktop6:FileSystemWriteVirtualization>
+	</Properties>
+
+	<Dependencies>
+		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.26100.0" MaxVersionTested="10.0.26100.0" />
+		<TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.26100.0" MaxVersionTested="10.0.26100.0" />
+	</Dependencies>
+
+	<Resources>
+		<Resource Language="x-generate"/>
+	</Resources>
+
+	<Applications>
+		<Application Id="App"
+			Executable="$targetnametoken$.exe"
+			EntryPoint="$targetentrypoint$">
+			<uap:VisualElements
+				DisplayName="ZenLauncher"
+				Description="ZenLauncher - hjemskjerm for spill"
+				BackgroundColor="transparent"
+				Square150x150Logo="Assets\Square150x150Logo.png"
+				Square44x44Logo="Assets\Square44x44Logo.png">
+				<uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" />
+				<uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#05060A" />
+			</uap:VisualElements>
+
+			<Extensions>
+				<!-- Programalias: «zenlauncher» med parameteren tray fra Oppgaveplanlegger/oppstart (starter skjult i systemkurven) -->
+				<uap3:Extension Category="windows.appExecutionAlias" Executable="$targetnametoken$.exe" EntryPoint="Windows.FullTrustApplication">
+					<uap3:AppExecutionAlias>
+						<desktop:ExecutionAlias Alias="zenlauncher.exe" />
+					</uap3:AppExecutionAlias>
+				</uap3:Extension>
+				<!-- Gjør appen valgbar under Innstillinger > Spill > Xbox mode > Choose home app -->
+				<uap3:Extension Category="windows.appExtension">
+					<uap3:AppExtension Name="windows.gamingApp" Id="App" DisplayName="ZenLauncher" Description="ZenLauncher - hjemskjerm for spill" PublicFolder="Public"/>
+				</uap3:Extension>
+			</Extensions>
+		</Application>
+	</Applications>
+
+	<Capabilities>
+		<rescap:Capability Name="runFullTrust" />
+		<rescap:Capability Name="unvirtualizedResources" />
+		<uap4:CustomCapability Name="Microsoft.appCategory.gamingHome_8wekyb3d8bbwe" />
+	</Capabilities>
+</Package>

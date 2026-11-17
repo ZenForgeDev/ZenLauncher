@@ -1,0 +1,13 @@
+bin/
+obj/
+*.user
+.vs/
+
+dist/
+
+# Signeringsnøkler og hemmeligheter skal aldri på GitHub
+*.pfx
+*.snk
+*.p12
+settings.json
+*.log

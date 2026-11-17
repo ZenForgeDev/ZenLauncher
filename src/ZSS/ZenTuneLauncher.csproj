@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+		<TargetPlatformMinVersion>10.0.26100.0</TargetPlatformMinVersion>
+		<RootNamespace>ZenStationShell</RootNamespace>
+		<AssemblyName>ZenTuneLauncher</AssemblyName>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<Platforms>x64</Platforms>
+		<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+		<UseWinUI>true</UseWinUI>
+		<!-- Windows App Runtime pakkes med, ingen ekstern installasjon nødvendig -->
+		<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+		<EnableMsixTooling>true</EnableMsixTooling>
+		<!-- Egendefinert capability (gamingHome) som gjør appen valgbar som hjem-app -->
+		<AppxCustomCapabilityCcd>CustomCapability.SCCD</AppxCustomCapabilityCcd>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<DefaultLanguage>nb-NO</DefaultLanguage>
+		<!-- Egen Program.cs (enkeltinstans) i stedet for generert Main -->
+		<DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Update="CustomCapability.SCCD">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<Content Include="Assets\*.png" />
+		<Content Include="Assets\Sounds\*.wav">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ZenTune.Core\ZenTune.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Manifest Include="$(ApplicationManifest)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="2.4.0" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.9169" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.260610101">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<!-- Gjør at «dotnet run» registrerer appen som pakke (loose layout) og starter den -->
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools.WinApp" Version="0.6.1" PrivateAssets="all" />
+	</ItemGroup>
+
+</Project>
